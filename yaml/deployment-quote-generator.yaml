@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: quote-generator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: quote-generator
+  template:
+    metadata:
+      labels:
+        app: quote-generator
+    spec:
+      containers:
+      - name: quote-generator
+        image: sidartasilva/quote-generator:latest
+        env:
+        - name: CONTAINER_PATH
+          valueFrom:
+            configMapKeyRef:
+              name: global-config
+              key: config.path
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5701
+        - containerPort: 8080
+        volumeMounts:
+        - name: config
+          mountPath: /etc/any/directory/config
+      volumes:
+      - name: config
+        configMap:
+          name: app-config
+          items:
+          - key: config.json
+            path: config.json
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: quote-generator
+spec:
+  type: LoadBalancer
+  selector:
+    app: quote-generator
+  ports:
+  - name: hazelcast
+    port: 5701
+  - name: app
+    port: 8080

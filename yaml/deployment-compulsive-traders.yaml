@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: compulsive-traders
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: compulsive-traders
+  template:
+    metadata:
+      labels:
+        app: compulsive-traders
+    spec:
+      containers:
+      - name: compulsive-traders
+        image: sidartasilva/compulsive-traders:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5701
+        - containerPort: 8088
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: compulsive-traders
+spec:
+  type: LoadBalancer
+  selector:
+    app: compulsive-traders
+  ports:
+  - name: hazelcast
+    port: 5701
+  - name: app
+    port: 8088

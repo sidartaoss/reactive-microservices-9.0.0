@@ -1,0 +1,175 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <!-- The parent to inherit the default dependencies and plugin configuration -->
+    <groupId>io.vertx.workshop</groupId>
+    <artifactId>reactive-microservices-9.0.0</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>  
+
+  <artifactId>micro-trader-dashboard</artifactId>
+
+  <repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+  </repositories>
+
+  <properties>
+    <vertx.version>3.6.3</vertx.version>
+
+    <vertx.verticle>io.vertx.workshop.dashboard.DashboardVerticle</vertx.verticle>
+
+    <vertx-maven-plugin.version>1.0.9</vertx-maven-plugin.version>
+
+    <vertx.cluster.name>vertx-cluster</vertx.cluster.name>
+
+    <vertx.console.version>ed3ad105f3</vertx.console.version>
+
+    <frontend.directory>src/main/frontend</frontend.directory>
+
+    <vertx.health.path>/health</vertx.health.path>
+
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.target>1.8</maven.compiler.target>
+  </properties>
+
+  <dependencies>
+    <dependency>
+        <groupId>io.vertx</groupId>
+        <artifactId>vertx-bridge-common</artifactId>
+        <version>${vertx.version}</version>
+    </dependency>    
+    <dependency>
+      <groupId>com.github.yunyu.vertx-console</groupId>
+      <artifactId>vertx-console-base</artifactId>
+      <version>${vertx.console.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.github.yunyu.vertx-console</groupId>
+      <artifactId>vertx-console-metrics</artifactId>
+      <version>${vertx.console.version}</version>
+    </dependency>
+    <!-- Insert console pages here, e.g. -->
+    <dependency>
+      <groupId>com.github.yunyu.vertx-console</groupId>
+      <artifactId>vertx-console-services</artifactId>
+      <version>${vertx.console.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>com.github.yunyu.vertx-console</groupId>
+        <artifactId>vertx-console-logging</artifactId>
+        <version>${vertx.console.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.github.cescoffier</groupId>
+      <artifactId>vertx-kubernetes-workshop-trader-page</artifactId>
+      <!--<version>0.0.1-SNAPSHOT</version>-->
+      <version>87996d087eacb3</version>
+    </dependency>
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-dropwizard-metrics</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.prometheus</groupId>
+      <artifactId>simpleclient_hotspot</artifactId>
+      <version>0.0.23</version>
+    </dependency>
+    <dependency>
+      <groupId>io.prometheus</groupId>
+      <artifactId>simpleclient_dropwizard</artifactId>
+      <version>0.0.23</version>
+    </dependency>
+    <dependency>
+      <groupId>com.github.yunyu</groupId>
+      <artifactId>prometheus-jvm-extras</artifactId>
+      <version>ee279b1</version>
+    </dependency>
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-service-discovery-bridge-kubernetes</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.25</version>
+    </dependency>
+    <dependency>
+      <groupId>com.github.yunyu.vertx-console</groupId>
+      <artifactId>vertx-console-circuit-breakers</artifactId>
+      <version>${vertx.console.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>com.github.yunyu.vertx-console</groupId>
+        <artifactId>vertx-console-shell</artifactId>
+        <version>${vertx.console.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>com.github.yunyu.vertx-console</groupId>
+        <artifactId>vertx-console-health</artifactId>
+        <version>${vertx.console.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>io.vertx</groupId>
+        <artifactId>vertx-shell</artifactId>
+        <version>${vertx.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.github.yunyu.vertx-console</groupId>
+      <artifactId>vertx-console-eventbus</artifactId>
+      <version>${vertx.console.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.github.yunyu.vertx-console</groupId>
+      <artifactId>vertx-console-http-clients</artifactId>
+      <version>${vertx.console.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.github.yunyu.vertx-console</groupId>
+      <artifactId>vertx-console-pools</artifactId>
+      <version>${vertx.console.version}</version>
+    </dependency>      
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-hazelcast</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.hazelcast</groupId>
+      <artifactId>hazelcast-kubernetes</artifactId>
+      <version>2.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.hazelcast</groupId>
+      <artifactId>hazelcast</artifactId>
+      <version>3.12.5</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>io.fabric8</groupId>
+        <artifactId>vertx-maven-plugin</artifactId>
+        <version>${vertx-maven-plugin.version}</version>
+        <executions>
+          <execution>
+            <id>vmp</id>
+            <goals>
+              <goal>initialize</goal>
+              <goal>package</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <redeploy>true</redeploy>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

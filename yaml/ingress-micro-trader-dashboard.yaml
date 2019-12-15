@@ -1,0 +1,13 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: public-routing-micro-trader-dashboard
+spec:
+  rules:
+    - host: micro-trader-dashboard-reactive-microservices.sidartasilva.io
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: micro-trader-dashboard
+              servicePort: 8090
